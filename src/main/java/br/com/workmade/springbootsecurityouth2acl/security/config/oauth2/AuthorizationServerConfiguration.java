@@ -35,6 +35,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	@Value("${jwt.oauth2.client}")
 	private String oauth2Client;
+	
+	@Value("${jwt.oauth2.resource.id}")
+	private String oauth2ResourceId;
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
@@ -46,7 +49,9 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory().withClient(this.oauth2Client)
 				.authorizedGrantTypes("password", "authorization_code", "refresh_token").scopes("bar", "read", "write")
-				.refreshTokenValiditySeconds(20000).accessTokenValiditySeconds(20000).secret(this.oauth2Secret);
+				.refreshTokenValiditySeconds(20000).accessTokenValiditySeconds(20000)
+				.resourceIds(this.oauth2ResourceId)
+				.secret(this.oauth2Secret);
 
 	}
 
@@ -60,5 +65,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 		return defaultTokenServices;
 
 	}
+	
+	
 
 }

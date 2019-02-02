@@ -8,29 +8,36 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 @Getter
 @Setter
-@NoArgsConstructor(force=true)
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Document
 public class Usuario {
 
     @Id
     private String id;
-    private final String nome;
-    private final List<Perfil> perfis;
+    private String nome;
+    private List<Perfil> perfis;
     private int idade;
-    private final String email;
-    private final String senha;
+    private String email;
+    private String senha;
 
     public Usuario(Usuario usuario) {
+    	this.id = usuario.getId();
         this.nome = usuario.getNome();
         this.email = usuario.getEmail();
         this.senha = usuario.getSenha();
         this.perfis = usuario.getPerfis();
     }
+
+	public Usuario(String nome, List<Perfil> perfisUsuario, String email, String senha) {
+		this.nome = nome;
+		this.perfis = perfisUsuario;
+		this.email = email;
+		this.senha = senha;
+		
+	}
 
     
 

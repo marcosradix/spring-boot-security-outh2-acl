@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import br.com.workmade.springbootsecurityouth2acl.security.service.MyUserDetailService;
 
@@ -35,6 +36,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(WebSecurity security) throws Exception {
 		security.ignoring().antMatchers(HttpMethod.OPTIONS, "/**")
-		.antMatchers(HttpMethod.GET, "/public/**");
+		.antMatchers(HttpMethod.GET, "/public/**", "/actuator/**");
+	}
+	
+
+	
+	@SuppressWarnings("deprecation")
+	@Bean
+	public static NoOpPasswordEncoder passwordEncoder() {
+	return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
 	}
 }
